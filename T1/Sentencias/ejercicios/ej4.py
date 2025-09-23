@@ -23,7 +23,31 @@ print()
 for i in range(cantidad):
     nombre = input(f"Introduce el nombre del superheroe {i+1}: ")
 
-    alias = input(f"Introduce el alias del supeheroe {i+1}: ")
-    team = input(f"Introduce el team del supeheroe {i+1}: ")
+    alias = input(f"Intoduce el alias del superheroe {i+1}: ")
+    team = input(f"Introduce el equipo al que pertene el superheroe {i+1}: ")
 
-    print(marvel)
+    power = []
+    poder1 = input(f"Introduce los poderes del superherore {i+1}: ")
+    poder2 = input(f"Introduce los poderes del superherore {i+1}: ")
+    power.append(poder1)
+    power.append(poder2)
+
+    isAvaible = input(f"Introduce si esta disponible el superheroe {i+1} (s/n): ")
+    valoration = float(input(f"Intruduce la valoracion del superherore {i+1}: "))
+
+    marvel[nombre]={
+        "alias": alias,
+        "team": [team],
+        "power": [power],
+        "Disponible": isAvaible == "s",
+        "valoracion": valoration
+    }
+
+print()
+for clave, valor in marvel.items():
+    if valor["Disponible"]:
+        print(f"")
+
+
+print()
+print(marvel)
