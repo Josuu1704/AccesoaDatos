@@ -6,6 +6,26 @@ def suma_fn(x,y):
     print(x + y)
 
 
+def resta_fn(x, y):
+    return x - y
+
+
+# args es una tuple de n elementos
+def multiplicar_n_fn(*args):
+    for i in args:
+        print(i)
+    print()
+
+
+def division_fn(**kwargs):
+    a = kwargs['a']
+    b = kwargs.get('b')
+    z = kwargs.get('z', 12)
+    print(kwargs)
+    print(a)
+    print(b)
+    print(z)
+
 
 nombre_fn()
 suma_fn(1, 2)
