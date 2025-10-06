@@ -23,63 +23,72 @@ confirmaciones cuando una acción se realice correctamente y avisos cuando ocurr
 El programa debe continuar ejecutándose hasta que el usuario elija la opción de salir.
 """
 
-list_tasks = []
+list_tasks = {}
 
+def comprobar_task(tarea):
+    if len(tarea) == 0:
+        raise ValueError ("La tarea no puede estar vacía")
+    if tarea.isnumeric():
+        raise ValueError ("La tarea debe ser un String.")
 
-def add_task(task: str):
-    if len(task) == 0:
-        raise ValueError("La tarea no puede estar vacía")
-    if task in list_tasks:
-        raise ValueError(f"La tarea {task} ya existe")
-    if task.isnumeric():
-        raise ValueError(f"La tarea no puede ser un número.")
-    print("Tarea añadida correctamente.\n")
-    list_tasks.append(task)
+def add_task():
+    tarea = input("Añade una nueva tarea: ")
+    comprobar_task(tarea)
+    list_tasks[tarea]={
 
+    }
 
-def remove_task(task: str):
-    if task not in list_tasks:
-        raise ValueError("La tarea no se encuentra en la lista.")
-    list_tasks.remove(task)
+def comprobar_si_existe(tarea):
+    if list_tasks.get(tarea) is None:
+        raise KeyError("La tarea existe.")
+    else:
+        raise KeyError("Error. La tarea no existe")
 
+def remove_task():
+    task_remove = input("Introduce la tarea a eliminar.")
+
+    if task_remove not in list_tasks:
+        raise KeyError("Error. La tarea no existe")
+
+    list_tasks.pop("tarea")
 
 def show_tasks():
+    if not list_tasks:
+        raise ValueError ("No hay tareas registtradas.")
     print("[")
-    for i in range(len(list_tasks)):
-        print(f"\t{1}. {list_tasks[i]}")
-    print("]")
-    print("\n")
 
 
-def list_menu():
-    val = True
-    while val:
-        print("Introduce una opción: ")
+def menu():
+    salir = False
+    while not salir:
+        print("--- MENU ---")
         print("1. Añadir tarea")
-        print("2. Eliminar tarea")
+        print("2.Eliminar tarea")
         print("3. Mostrar tarea")
-        print("4. Salir")
-        opt = int(input(">> "))
-        try:
-            if opt == 1:
-                task = input("Introduce una tarea a la lista: ")
-                add_task(task)
-            elif opt == 2:
-                if len(list_tasks) == 0:
-                    print("No hay tareas registradas")
-                else:
-                    print("\n")
-                    show_tasks()
-                    task_remove = input("Introduce una tarea para borrar: ")
-                    remove_task(task_remove)
-            elif opt == 3:
-                show_tasks()
-            elif opt == 4:
-                val = False
+        print("4, Salir")
 
-        except ValueError as e:
-            print(e)
-            print("\n")
+        option = int(input("Introduce el numero de la accion: "))
+
+        if option == 1:
+            try:
+                add_task()
+            except ValueError as e:
+                print(e)
+        elif option == 2:
+            try:
+                remove_task()
+                print("Tarea eliminada correctamente.")
+            except KeyError as e:
+                print(e)
+        elif option == 3:
+            pass
+        elif option == 4:
+            salir = True
+            print("Saliendo del programa...")
+        else:
+            print("ERROR. Opcion no valida.")
 
 
-list_menu()
+def main():
+    menu()
+main()
