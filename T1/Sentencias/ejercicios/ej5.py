@@ -87,6 +87,7 @@ def menu_fn():
     print()
     salir = False
     while not salir:
+        print("---- MENU ----")
         print("1.Introducir usuario")
         print("2.Comproabsr si existe un personaje")
         print("3. Personaje con mayor rating")
