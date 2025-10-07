@@ -52,10 +52,9 @@ def remove_task():
 
     list_tasks.pop("tarea")
 
-def show_tasks():
-    if not list_tasks:
+def show_tasks(list_task):
+    if len (list_tasks) == 0:
         raise ValueError ("No hay tareas registtradas.")
-    print("[")
 
 
 def menu():
