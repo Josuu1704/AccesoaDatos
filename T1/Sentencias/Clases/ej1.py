@@ -16,9 +16,11 @@ import random
 class Student:
     alumnos = []
 
-    def __init__(self, name, grade):
+    def __init__(self, name):
+        if not name or name.isnumeric():
+            raise ValueError("El nombre no pued estar vacio ni ser un numero")
         self.__name = name
-        self.__grade = grade
+        self.__grade = []
         self.__id = self.__generate_id()
 
     def __generate_id(self):
@@ -34,6 +36,22 @@ class Student:
         if name.isNumeric():
             raise ValueError("La tarea no puede estar vacia")
 
-    def __
+    def add_grade(self, grade):
+        self.__grade.append(grade)
+
+    @property
+    def media(self):
+        if not self.__grade:
+            return 0
+        return sum(self.__grade) / len(self.__grade)
 
 
+    def __str__(self):
+        return f"[ID: {self.__id}] {self.__name}: Notas: [{self.__grade}] / Media nota: {self.media}"
+
+a1 = Student("JOsue")
+
+a1.add_grade(8)
+a1.add_grade(7)
+
+print(a1)
