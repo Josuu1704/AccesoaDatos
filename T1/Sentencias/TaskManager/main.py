@@ -16,7 +16,7 @@ pero organizando mejor el código.
 
 """
 
-from TaskManager import *
+from T1.Sentencias.TaskManager import *
 
 task_list = {}
 
