@@ -11,28 +11,57 @@
 - Implementa una propiedad de descuento. Será True si vale más de 25.00/False si no lo hace. Además, antes de retornar, descontará al precio original 10€ en caso de ser True.
 - Implementa el método __str__ para mostrar:
   - [ISBN: numero] "Nombre del libro" de "Nombre de autor" -> Precio€ """
-import random
+import secrets
 
 
-class Book():
-    def __init__(self, title, author, price, isbn):
-        if not title and not author:
-            raise ValueError("El titulo/autor no puede estar vacio")
-        if title.isnumeric and author.isnumeric():
-            raise ValueError("El titulo/autor no puede ser un numero")
-        if len(title) > 5:
-            raise ValueError("El titulo debe contener mas de 5 caracteres")
-        if price < 0:
-            raise ValueError("El precio no puede ser negativo")
+class Book:
+
+    def __init__(self, title, author, price):
+        self.__comprobar_title(title)
+        self.__comprobar_author(author)
+        self.__comprobar_price(price)
 
         self.__title = title
         self.__author = author
         self.__price = price
-        self._isbn = self.__autogenerate_isbn()
+        # self.__isbn = self.__create_isbn()
+
+    @property
+    def __isbn(self):
+        return secrets.token_hex(16)
+
+    @property
+    def descuento(self):
+        if self.__price > 25:
+            self.__price -= 10
+        return self.__price
 
     @staticmethod
-    def __autogenerate_isbn():
-        return random.randint(0,25)
+    def __comprobar_title(title):
+        if len(title) < 5:
+            raise ValueError("El título debe de tener una longitud superior a 5 caracteres")
+        if title == "":
+            raise ValueError("El titulo no puede estar vacío")
+        if title.isnumeric():
+            raise ValueError("El titulo no puede ser un numero")
+
+    @staticmethod
+    def __comprobar_author(author):
+        if author == "":
+            raise ValueError("El titulo no puede estar vacío")
+        if author.isnumeric():
+            raise ValueError("El titulo no puede ser un numero")
+
+    @staticmethod
+    def __comprobar_price(price):
+        if price < 0:
+            raise ValueError("El precio debe de ser mayor a 0")
+
+    @staticmethod
+    def __create_isbn():
+        return secrets.token_hex(16)
 
     def __str__(self):
-        return f"[ISBN: {self._isbn}] {self.__title} de {self.__author} -> Precio: {self.__price}€"
+        return f"[ISBN: {self.__isbn}] '{self.__title}' de '{self.__author}' --> {self.descuento}€"
+
+
